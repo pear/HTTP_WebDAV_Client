@@ -36,10 +36,11 @@
 		}
 
 		switch ($this->_depth) {
-		case '3':
+		case '2':
 			switch ($tag) {
 			case 'propstat':
-				$this->_tmpprop = array();
+				// TODO check is_executable, lockinfo ...
+				$this->_tmpprop = array("mode" => 0666 /* all may read and write (for now) */);
 				break;
 			}
 		}
@@ -104,6 +105,12 @@
 				$this->_tmpprop['size'] = $this->_tmpdata;
 				break;
 			}
+		case '5':
+			switch ($tag) {
+			case 'collection': 
+				$this->_tmpprop['mode'] |= 040000; // S_IFDIR
+				break;
+			}
 		}
 
 		unset($this->_tmpdata);
@@ -118,6 +125,7 @@
 			// TODO
 		} else {
 			reset($this->urls);
+			print_r($this->urls);
 			return current($this->urls);
 		}
 	}
