@@ -8,16 +8,16 @@
    RFC2518 compliant stream wrapper that allows to use WebDAV server
    resources like a regular file system from within PHP.
   </description>
-	
+    
   <maintainers>
    <maintainer>
-	<user>hholzgra</user>
-	<name>Hartmut Holzgraefe</name>
-	<email>hartmut@php.net</email>
-	<role>lead</role>
+    <user>hholzgra</user>
+    <name>Hartmut Holzgraefe</name>
+    <email>hartmut@php.net</email>
+    <role>lead</role>
    </maintainer>
   </maintainers>
-	
+    
   <release>
    <version>0.9.6</version>
    <date>2003-12-20</date>
@@ -34,19 +34,19 @@
     <dep type="pkg" rel="ge" version="1.0">HTTP</dep>
    </deps>
    <filelist>
-	  <dir name="/" baseinstalldir="HTTP/WebDAV">
-	   <file role="php">Client.php</file>
+      <dir name="/" baseinstalldir="HTTP/WebDAV">
+       <file role="php">Client.php</file>
      <dir name="Tools">
-	    <file role="php">_parse_lock_response.php</file>
-	    <file role="php">_parse_propfind_response.php</file>
+        <file role="php">_parse_lock_response.php</file>
+        <file role="php">_parse_propfind_response.php</file>
      </dir>
      <dir name="Client">
-	    <file role="php">Stream.php</file>
-	   </dir>
+        <file role="php">Stream.php</file>
+       </dir>
     </dir>
    </filelist>
   </release>
-	
+    
   <changelog>
    <release>
     <version>0.9.5</version>
@@ -85,5 +85,5 @@ error checking
     </notes>
    </release>
   </changelog>
-	
+    
  </package>
