@@ -757,10 +757,10 @@ class HTTP_WebDAV_Client_Stream
 
         // extract authentication information
         if (isset($url['user'])) {
-            $this->user = $url['user'];
+            $this->user = urldecode($url['user']);
         }
         if (isset($url['pass'])) {
-            $this->pass = $url['pass'];
+            $this->pass = urldecode($url['pass']);
         }
         
         return true;
