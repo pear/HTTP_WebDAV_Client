@@ -141,7 +141,7 @@ class HTTP_WebDAV_Client_Stream
             $req->setBasicAuth($this->user, @$this->pass);          
         }
         $req->addHeader("Depth", "0");
-        $req->addHeader("Content-type", "text/xml");
+        $req->addHeader("Content-Type", "text/xml");
         $req->addRawPostData('<?xml version="1.0" encoding="utf-8"?>
 <propfind xmlns="DAV:">
  <prop>
@@ -444,7 +444,7 @@ class HTTP_WebDAV_Client_Stream
             $req->setBasicAuth($this->user, @$this->pass);          
         }
         $req->addHeader("Depth", "1");
-        $req->addHeader("Content-type", "text/xml");
+        $req->addHeader("Content-Type", "text/xml");
         $req->addRawPostData('<?xml version="1.0" encoding="utf-8"?>
 <propfind xmlns="DAV:">
  <prop>

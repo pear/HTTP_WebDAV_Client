@@ -19,13 +19,15 @@
   </maintainers>
 	
   <release>
-   <version>0.9.5</version>
-   <date>2003-12-04</date>
+   <version>0.9.6</version>
+   <date>2003-12-20</date>
    <state>beta</state>
    <license>PHP</license>
    <notes>
-lots of small improvements and additions, now waiting for missing 
-pieces in the user streams interface ...
+- fixed settings of mode flags for stat()/url_stat()
+- added missing authentication in lots of places
+- added support for rename() and mkdir() (PHP >= 5.0.0b3)
+- added lock support (experimental, requires PHP changes not yet in CVS)
    </notes>
    <deps>
     <dep type="php" rel="ge" version="4.3"/>
@@ -35,6 +37,7 @@ pieces in the user streams interface ...
 	  <dir name="/" baseinstalldir="HTTP/WebDAV">
 	   <file role="php">Client.php</file>
      <dir name="Tools">
+	    <file role="php">_parse_lock_response.php</file>
 	    <file role="php">_parse_propfind_response.php</file>
      </dir>
      <dir name="Client">
@@ -45,6 +48,32 @@ pieces in the user streams interface ...
   </release>
 	
   <changelog>
+   <release>
+    <version>0.9.5</version>
+    <date>2003-12-04</date>
+    <state>beta</state>
+    <license>PHP</license>
+    <notes>
+lots of small improvements and additions, now waiting for missing 
+pieces in the user streams interface ...
+    </notes>
+    <deps>
+     <dep type="php" rel="ge" version="4.3"/>
+     <dep type="pkg" rel="ge" version="1.0">HTTP</dep>
+    </deps>
+    <filelist>
+     <dir name="/" baseinstalldir="HTTP/WebDAV">
+      <file role="php">Client.php</file>
+      <dir name="Tools">
+       <file role="php">_parse_propfind_response.php</file>
+      </dir>
+      <dir name="Client">
+       <file role="php">Stream.php</file>
+      </dir>
+     </dir>
+    </filelist>
+   </release>
+
    <release>
     <version>0.9.0</version>
     <date>2003-07-11</date>
