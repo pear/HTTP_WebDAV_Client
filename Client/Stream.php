@@ -173,7 +173,18 @@ class HTTP_WebDAV_Client_Stream
             error_log("file not found: ".$req->getResponseCode());
             return false;
         }
+        
+        // 'w' -> open for writing, truncate existing files
+        if (strpos($mode, "w") !== false) {
+            $req = &new HTTP_Request($this->url);
+            $req->setMethod(HTTP_REQUEST_METHOD_PUT);
+            if (is_string($this->user)) {
+                $req->setBasicAuth($this->user, @$this->pass);          
+            }
+            $req->sendRequest();
+        }
 
+        // 'a' -> open for appending
         if (strpos($mode, "a") !== false) {
             $this->eof = true;
         }
