@@ -315,7 +315,8 @@ class HTTP_WebDAV_Client_Stream
         case 200:
         case 201:
         case 204:
-            return $end-$start;
+            $this->position += strlen($buffer);
+            return $end - $start;
             
         default: 
             return false;
