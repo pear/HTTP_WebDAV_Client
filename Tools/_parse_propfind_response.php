@@ -125,7 +125,6 @@
 			// TODO
 		} else {
 			reset($this->urls);
-			print_r($this->urls);
 			return current($this->urls);
 		}
 	}
