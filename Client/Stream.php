@@ -234,7 +234,7 @@ class HTTP_WebDAV_Client_Stream
     {
         // do some math
         $start = $this->position;
-        $end = $start+$count;
+        $end = $start + $count - 1;
 
         // create a GET request with a range
         $req = &new HTTP_Request($this->url);
