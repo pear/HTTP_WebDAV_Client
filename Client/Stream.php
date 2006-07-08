@@ -264,6 +264,7 @@ class HTTP_WebDAV_Client_Stream
         case 416:
             // reading beyond end of file is not an error
             $data = "";
+            $len = 0;
             break;
 
         default: 
