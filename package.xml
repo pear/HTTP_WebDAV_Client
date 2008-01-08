@@ -1,37 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.6.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
-http://pear.php.net/dtd/tasks-1.0.xsd
-http://pear.php.net/dtd/package-2.0
-http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.6.1" 
+         version="2.0" 
+         xmlns="http://pear.php.net/dtd/package-2.0" 
+         xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+                             http://pear.php.net/dtd/tasks-1.0.xsd
+                             http://pear.php.net/dtd/package-2.0
+                             http://pear.php.net/dtd/package-2.0.xsd">
+
  <name>HTTP_WebDAV_Client</name>
  <channel>pear.php.net</channel>
  <summary>WebDAV stream wrapper class</summary>
- <description>RFC2518 compliant stream wrapper that allows to use WebDAV server
-resources like a regular file system from within PHP.
+
+ <description>
+   RFC2518 compliant stream wrapper that allows to use WebDAV server
+   resources like a regular file system from within PHP.
  </description>
+
  <lead>
   <name>Hartmut Holzgraefe</name>
   <user>hholzgra</user>
   <email>hartmut@php.net</email>
   <active>yes</active>
  </lead>
+
  <date>2008-01-08</date>
  <time>17:06:25</time>
+
  <version>
   <release>0.9.7</release>
   <api>0.9.7</api>
  </version>
+
  <stability>
   <release>beta</release>
   <api>beta</api>
  </stability>
+
  <license uri="http://www.php.net/license">PHP</license>
- <notes>- advance writer position in stream_write() (Bug #2463)
+
+ <notes>
+- advance writer position in stream_write() (Bug #2463)
 - analyzed bugs #1044 and #1045, actual cause is in HTTP_Request,
   needs to be fixed there (see Bug #1045 for progress)
 - fixed package dependency bug (HTTP_Request instead of HTTP)
-   
  </notes>
+
  <contents>
   <dir name="/">
    <dir name="Client">
@@ -44,6 +59,7 @@ resources like a regular file system from within PHP.
    <file baseinstalldir="HTTP/WebDAV" name="Client.php" role="php" />
   </dir> <!-- / -->
  </contents>
+
  <dependencies>
   <required>
    <php>
@@ -59,7 +75,9 @@ resources like a regular file system from within PHP.
    </package>
   </required>
  </dependencies>
- <phprelease />
+
+ <phprelease/>
+
  <changelog>
   <release>
    <version>
@@ -72,13 +90,14 @@ resources like a regular file system from within PHP.
    </stability>
    <date>2003-12-20</date>
    <license uri="http://www.php.net/license">PHP</license>
-   <notes>- fixed settings of mode flags for stat()/url_stat()
-- added missing authentication in lots of places
-- added support for rename() and mkdir() (PHP &gt;= 5.0.0b3)
-- added lock support (experimental, requires PHP changes not yet in CVS)
-    
+   <notes>
+    - fixed settings of mode flags for stat()/url_stat()
+    - added missing authentication in lots of places
+    - added support for rename() and mkdir() (PHP &gt;= 5.0.0b3)
+    - added lock support (experimental, requires PHP changes not yet in CVS)
    </notes>
   </release>
+
   <release>
    <version>
     <release>0.9.5</release>
@@ -90,11 +109,12 @@ resources like a regular file system from within PHP.
    </stability>
    <date>2003-12-04</date>
    <license uri="http://www.php.net/license">PHP</license>
-   <notes>lots of small improvements and additions, now waiting for missing 
-pieces in the user streams interface ...
-    
+   <notes>
+    lots of small improvements and additions, now waiting for missing 
+    pieces in the user streams interface ...
    </notes>
   </release>
+
   <release>
    <version>
     <release>0.9.0</release>
@@ -106,9 +126,9 @@ pieces in the user streams interface ...
    </stability>
    <date>2003-07-11</date>
    <license uri="http://www.php.net/license">PHP</license>
-   <notes>already usable but needs additional performance tuning and
-error checking
-    
+   <notes>
+    already usable but needs additional performance tuning and
+    error checking
    </notes>
   </release>
  </changelog>
