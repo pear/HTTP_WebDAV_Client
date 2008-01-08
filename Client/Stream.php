@@ -234,7 +234,7 @@ class HTTP_WebDAV_Client_Stream
     {
         // do some math
         $start = $this->position;
-        $end = $start + $count - 1;
+        $end   = $start + $count - 1;
 
         // create a GET request with a range
         $req = &new HTTP_Request($this->url);
@@ -264,7 +264,7 @@ class HTTP_WebDAV_Client_Stream
         case 416:
             // reading beyond end of file is not an error
             $data = "";
-            $len = 0;
+            $len  = 0;
             break;
 
         default: 
@@ -294,7 +294,7 @@ class HTTP_WebDAV_Client_Stream
     {
         // do some math
         $start = $this->position;
-        $end = $this->position + strlen($buffer);
+        $end   = $this->position + strlen($buffer);
 
         // create a partial PUT request
         $req = &new HTTP_Request($this->url);
@@ -324,28 +324,28 @@ class HTTP_WebDAV_Client_Stream
         }
 
         /* 
-           We do not cope with servers that do not support partial PUTs!
-           And we do assume that a server does conform to the following 
-           rule from RFC 2616 Section 9.6:
+         We do not cope with servers that do not support partial PUTs!
+         And we do assume that a server does conform to the following 
+         rule from RFC 2616 Section 9.6:
 
-           "The recipient of the entity MUST NOT ignore any Content-* 
-            (e.g. Content-Range) headers that it does not understand or 
-            implement and MUST return a 501 (Not Implemented) response 
-            in such cases."
+         "The recipient of the entity MUST NOT ignore any Content-* 
+         (e.g. Content-Range) headers that it does not understand or 
+         implement and MUST return a 501 (Not Implemented) response 
+         in such cases."
            
-            So the worst case scenario with a compliant server not 
-            implementing partial PUTs should be a failed request. A 
-            server simply ignoring "Content-Range" would replace 
-            file contents with the request body instead of putting
-            the data at the requested place but we can blame it 
-            for not being compliant in this case ;)
+         So the worst case scenario with a compliant server not 
+         implementing partial PUTs should be a failed request. A 
+         server simply ignoring "Content-Range" would replace 
+         file contents with the request body instead of putting
+         the data at the requested place but we can blame it 
+         for not being compliant in this case ;)
 
-            (TODO: maybe we should do a HTTP version check first?)
+         (TODO: maybe we should do a HTTP version check first?)
  
-            we *could* emulate partial PUT support by adding local
-            cacheing but for now we don't want to as it adds a lot
-            of complexity and storage overhead to the client ...
-         */
+         we *could* emulate partial PUT support by adding local
+         cacheing but for now we don't want to as it adds a lot
+         of complexity and storage overhead to the client ...
+        */
     }
 
     /**
@@ -476,7 +476,7 @@ class HTTP_WebDAV_Client_Stream
             $this->dirpos = 0;
 
             // for all returned resource entries
-            foreach (split("\n",$req->getResponseBody()) as $line) {
+            foreach (split("\n", $req->getResponseBody()) as $line) {
                 // get the href URL
                 if (ereg("href>([^<]*)", $line, $matches)) {
                     // skip the directory itself
@@ -559,7 +559,8 @@ class HTTP_WebDAV_Client_Stream
      * @param  string collection URL to be created
      * @return bool   true on access
      */
-    function mkdir($path) {
+    function mkdir($path) 
+    {
         // rewrite the request URL
         if (!$this->_parse_url($path)) return false;
 
@@ -595,7 +596,8 @@ class HTTP_WebDAV_Client_Stream
      * @param  string collection URL to be created
      * @return bool   true on access
      */
-    function rmdir($path) {
+    function rmdir($path) 
+    {
         // TODO: this should behave like "rmdir", currently it is more like "rm -rf"
 
         // rewrite the request URL
@@ -634,7 +636,8 @@ class HTTP_WebDAV_Client_Stream
      * @param  string resource URL to move to
      * @return bool   true on access
      */
-    function rename($path, $new_path) {
+    function rename($path, $new_path) 
+    {
         // rewrite the request URL
         if (!$this->_parse_url($path)) return false;
 
@@ -830,10 +833,11 @@ class HTTP_WebDAV_Client_Stream
      * @access private
      * @return bool    true on success else false
      */
-    function stream_lock($mode) {
+    function stream_lock($mode) 
+    {
         /* TODO:
-           - think over how to refresh locks
-         */
+         - think over how to refresh locks
+        */
         
         $ret = false;
 
@@ -864,10 +868,9 @@ class HTTP_WebDAV_Client_Stream
  <D:lockscope><D:%s/></D:lockscope> 
  <D:locktype><D:write/></D:locktype> 
  <D:owner>%s</D:owner> 
-</D:lockinfo>'
-                            , ($mode & LOCK_SH) ? "shared" : "exclusive"
-                            , get_class($this) // TODO better owner string
-                            );
+</D:lockinfo>',
+                            ($mode & LOCK_SH) ? "shared" : "exclusive",
+                            get_class($this)); // TODO better owner string
             $req = &new HTTP_Request($this->url);
             $req->setMethod(HTTP_REQUEST_METHOD_LOCK);
             if (is_string($this->user)) {
@@ -876,7 +879,7 @@ class HTTP_WebDAV_Client_Stream
             if ($this->locktoken) { // needed for refreshing a lock
                 $req->addHeader("Lock-Token", "<{$this->locktoken}>");
             }
-            $req->addHeader("Timeout","Infinite, Second-4100000000");
+            $req->addHeader("Timeout", "Infinite, Second-4100000000");
             $req->addHeader("Content-Type", 'text/xml; charset="utf-8"');
             $req->addRawPostData($body);
             $req->sendRequest();
@@ -898,4 +901,10 @@ class HTTP_WebDAV_Client_Stream
     }
 }
 
-?>
+/*
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * indent-tabs-mode:nil
+ * End:
+ */
