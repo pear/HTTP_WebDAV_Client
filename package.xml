@@ -1,118 +1,115 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "../package.dtd">
-
- <package version="1.0">
-  <name>HTTP_WebDAV_Client</name>
-  <summary>WebDAV stream wrapper class</summary>
-  <description>
-   RFC2518 compliant stream wrapper that allows to use WebDAV server
-   resources like a regular file system from within PHP.
-  </description>
-    
-  <maintainers>
-   <maintainer>
-    <user>hholzgra</user>
-    <name>Hartmut Holzgraefe</name>
-    <email>hartmut@php.net</email>
-    <role>lead</role>
-   </maintainer>
-  </maintainers>
-    
-  <release>
-   <version>0.9.7</version>
-   <date>2005-01-10</date>
-   <state>beta</state>
-   <license>PHP</license>
-   <notes>
-- advance writer position in stream_write() (Bug #2463)
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.6.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>HTTP_WebDAV_Client</name>
+ <channel>pear.php.net</channel>
+ <summary>WebDAV stream wrapper class</summary>
+ <description>RFC2518 compliant stream wrapper that allows to use WebDAV server
+resources like a regular file system from within PHP.
+ </description>
+ <lead>
+  <name>Hartmut Holzgraefe</name>
+  <user>hholzgra</user>
+  <email>hartmut@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2008-01-08</date>
+ <time>17:06:25</time>
+ <version>
+  <release>0.9.7</release>
+  <api>0.9.7</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>- advance writer position in stream_write() (Bug #2463)
 - analyzed bugs #1044 and #1045, actual cause is in HTTP_Request,
   needs to be fixed there (see Bug #1045 for progress)
 - fixed package dependency bug (HTTP_Request instead of HTTP)
-   </notes>
-   <deps>
-    <dep type="php" rel="ge" version="4.3"/>
-    <dep type="pkg" rel="ge" version="1.0">HTTP_Request</dep>
-   </deps>
-   <filelist>
-    <dir name="/" baseinstalldir="HTTP/WebDAV">
-     <file role="php">Client.php</file>
-     <dir name="Tools">
-      <file role="php">_parse_lock_response.php</file>
-      <file role="php">_parse_propfind_response.php</file>
-     </dir>
-     <dir name="Client">
-      <file role="php">Stream.php</file>
-     </dir>
-    </dir>
-   </filelist>
-  </release>
-
-  <changelog>
-   <release>
-    <version>0.9.6</version>
-    <date>2003-12-20</date>
-    <state>beta</state>
-    <license>PHP</license>
-    <notes>
-- fixed settings of mode flags for stat()/url_stat()
+   
+ </notes>
+ <contents>
+  <dir name="/">
+   <dir name="Client">
+    <file baseinstalldir="HTTP/WebDAV" name="Stream.php" role="php" />
+   </dir> <!-- /Client -->
+   <dir name="Tools">
+    <file baseinstalldir="HTTP/WebDAV" name="_parse_lock_response.php" role="php" />
+    <file baseinstalldir="HTTP/WebDAV" name="_parse_propfind_response.php" role="php" />
+   </dir> <!-- /Tools -->
+   <file baseinstalldir="HTTP/WebDAV" name="Client.php" role="php" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.3</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+   <package>
+    <name>HTTP_Request</name>
+    <channel>pear.php.net</channel>
+    <min>1.0</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.9.6</release>
+    <api>0.9.6</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2003-12-20</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>- fixed settings of mode flags for stat()/url_stat()
 - added missing authentication in lots of places
-- added support for rename() and mkdir() (PHP >= 5.0.0b3)
+- added support for rename() and mkdir() (PHP &gt;= 5.0.0b3)
 - added lock support (experimental, requires PHP changes not yet in CVS)
-    </notes>
-    <deps>
-     <dep type="php" rel="ge" version="4.3"/>
-     <dep type="pkg" rel="ge" version="1.0">HTTP</dep>
-    </deps>
-    <filelist>
-     <dir name="/" baseinstalldir="HTTP/WebDAV">
-      <file role="php">Client.php</file>
-      <dir name="Tools">
-       <file role="php">_parse_lock_response.php</file>
-       <file role="php">_parse_propfind_response.php</file>
-      </dir>
-      <dir name="Client">
-       <file role="php">Stream.php</file>
-      </dir>
-     </dir>
-    </filelist>
-   </release>
     
-   <release>
-    <version>0.9.5</version>
-    <date>2003-12-04</date>
-    <state>beta</state>
-    <license>PHP</license>
-    <notes>
-lots of small improvements and additions, now waiting for missing 
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.9.5</release>
+    <api>0.9.5</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2003-12-04</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>lots of small improvements and additions, now waiting for missing 
 pieces in the user streams interface ...
-    </notes>
-    <deps>
-     <dep type="php" rel="ge" version="4.3"/>
-     <dep type="pkg" rel="ge" version="1.0">HTTP</dep>
-    </deps>
-    <filelist>
-     <dir name="/" baseinstalldir="HTTP/WebDAV">
-      <file role="php">Client.php</file>
-      <dir name="Tools">
-       <file role="php">_parse_propfind_response.php</file>
-      </dir>
-      <dir name="Client">
-       <file role="php">Stream.php</file>
-      </dir>
-     </dir>
-    </filelist>
-   </release>
-
-   <release>
-    <version>0.9.0</version>
-    <date>2003-07-11</date>
-    <state>alpha</state>
-    <license>PHP</license>
-    <notes>
-already usable but needs additional performance tuning and
-error checking
-    </notes>
-   </release>
-  </changelog>
     
- </package>
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.9.0</release>
+    <api>0.9.0</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2003-07-11</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>already usable but needs additional performance tuning and
+error checking
+    
+   </notes>
+  </release>
+ </changelog>
+</package>
