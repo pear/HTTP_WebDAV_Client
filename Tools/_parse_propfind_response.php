@@ -41,7 +41,7 @@ class HTTP_WebDAV_Client_parse_propfind_response
             switch ($tag) {
             case 'propstat':
                 // TODO check is_executable, lockinfo ...
-                $this->_tmpprop = array("mode" => 0666 /* all may read and write (for now) */);
+                $this->_tmpprop = array("mode" => 0100666 /* all may read and write (for now) */);
                 break;
             }
         }
@@ -109,7 +109,8 @@ class HTTP_WebDAV_Client_parse_propfind_response
         case '5':
             switch ($tag) {
             case 'collection': 
-                $this->_tmpprop['mode'] |= 040000; // S_IFDIR
+                $this->_tmpprop['mode'] &= ~0100000; // clear S_IFREG
+                $this->_tmpprop['mode'] |= 040000; // set S_IFDIR
                 break;
             }
         }
