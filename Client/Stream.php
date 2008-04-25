@@ -186,6 +186,7 @@ class HTTP_WebDAV_Client_Stream
 
         // 'a' -> open for appending
         if (strpos($mode, "a") !== false) {
+            $this->position = $this->stat['size'];            
             $this->eof = true;
         }
 
