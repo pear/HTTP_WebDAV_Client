@@ -20,6 +20,14 @@ define('HTTP_REQUEST_METHOD_UNLOCK',    'UNLOCK',    true);
  */
 class HTTP_WebDAV_Client_Stream 
 {
+     /**
+     * User-Agent: header string
+     *
+     * @access private
+     * @var    string
+     */
+    var $userAgent = "PEAR::HTTP_WebDAV_Client";
+
     /**
      * The http or https resource URL 
      *
@@ -137,6 +145,7 @@ class HTTP_WebDAV_Client_Stream
         // now get the file metadata
         // we only need type, size, creation and modification date
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_PROPFIND);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -178,6 +187,7 @@ class HTTP_WebDAV_Client_Stream
         // 'w' -> open for writing, truncate existing files
         if (strpos($mode, "w") !== false) {
             $req = &new HTTP_Request($this->url);
+            $req->addHeader('User-agent',$this->userAgent);
             $req->setMethod(HTTP_REQUEST_METHOD_PUT);
             if (is_string($this->user)) {
                 $req->setBasicAuth($this->user, @$this->pass);          
@@ -240,6 +250,7 @@ class HTTP_WebDAV_Client_Stream
 
         // create a GET request with a range
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_GET);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -300,6 +311,7 @@ class HTTP_WebDAV_Client_Stream
 
         // create a partial PUT request
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_PUT);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -454,6 +466,7 @@ class HTTP_WebDAV_Client_Stream
 
         // now read the directory
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_PROPFIND);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -570,6 +583,7 @@ class HTTP_WebDAV_Client_Stream
         if (!$this->_check_options())  return false;
 
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_MKCOL);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -609,6 +623,7 @@ class HTTP_WebDAV_Client_Stream
         if (!$this->_check_options())  return false;
 
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_DELETE);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -647,6 +662,7 @@ class HTTP_WebDAV_Client_Stream
         if (!$this->_check_options())  return false;
 
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_MOVE);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -692,6 +708,7 @@ class HTTP_WebDAV_Client_Stream
         }       
 
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_DELETE);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -750,7 +767,8 @@ class HTTP_WebDAV_Client_Stream
         $url = parse_url($path);
 
         // detect whether plain or SSL-encrypted transfer is requested
-        switch ($url['scheme']) {
+        $scheme = $url['scheme'];
+        switch ($scheme) {
         case "webdav":
             $url['scheme'] = "http";
             break;
@@ -761,6 +779,18 @@ class HTTP_WebDAV_Client_Stream
             error_log("only 'webdav:' and 'webdavs:' are supported, not '$url[scheme]:'");
             return false;
         }
+
+        // extract settings from stream context
+        $context = stream_context_get_options($this->context);
+
+        // so far we only handle the User-Agent setting
+        if (isset($context[$scheme]['user_agent'])) {
+            $this->userAgent = $context[$scheme]['user_agent'];
+        }
+
+        // TODO check whether to implement other HTTP specific
+        // context settings from http://php.net/manual/en/context.http.php
+
 
         // if a TCP port is specified we have to add it after the host
         if (isset($url['port'])) {
@@ -780,10 +810,9 @@ class HTTP_WebDAV_Client_Stream
         if (isset($url['pass'])) {
             $this->pass = urldecode($url['pass']);
         }
-        
+
         return true;
     }
-
 
     /**
      * Helper function for WebDAV OPTIONS detection
@@ -795,6 +824,7 @@ class HTTP_WebDAV_Client_Stream
     {
         // now check OPTIONS reply for WebDAV response headers
         $req = &new HTTP_Request($this->url);
+        $req->addHeader('User-agent',$this->userAgent);
         $req->setMethod(HTTP_REQUEST_METHOD_OPTIONS);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
@@ -852,6 +882,7 @@ class HTTP_WebDAV_Client_Stream
         case LOCK_UN:
             if ($this->locktoken) {
                 $req = &new HTTP_Request($this->url);
+                $req->addHeader('User-agent',$this->userAgent);
                 $req->setMethod(HTTP_REQUEST_METHOD_UNLOCK);
                 if (is_string($this->user)) {
                     $req->setBasicAuth($this->user, @$this->pass);          
@@ -874,6 +905,7 @@ class HTTP_WebDAV_Client_Stream
                             ($mode & LOCK_SH) ? "shared" : "exclusive",
                             get_class($this)); // TODO better owner string
             $req = &new HTTP_Request($this->url);
+            $req->addHeader('User-agent',$this->userAgent);
             $req->setMethod(HTTP_REQUEST_METHOD_LOCK);
             if (is_string($this->user)) {
                 $req->setBasicAuth($this->user, @$this->pass);          

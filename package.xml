@@ -26,25 +26,26 @@
  </lead>
 
  <date>2008-01-08</date>
- <time>17:06:25</time>
+ <time>17:20:00</time>
 
  <version>
-  <release>0.9.7</release>
-  <api>0.9.7</api>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
  </version>
 
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>stable</release>
+  <api>stable</api>
  </stability>
 
  <license uri="http://www.php.net/license">PHP</license>
 
  <notes>
-- advance writer position in stream_write() (Bug #2463)
-- analyzed bugs #1044 and #1045, actual cause is in HTTP_Request,
-  needs to be fixed there (see Bug #1045 for progress)
-- fixed package dependency bug (HTTP_Request instead of HTTP)
+  1.0 stable release finally
+
+  Bugs fixed since 0.9.7:
+  * Bug #6407: stream_read(): Range one byte too long
+  * Bug #7714: End of file marker not set in stream_read
  </notes>
 
  <contents>
@@ -79,6 +80,26 @@
  <phprelease/>
 
  <changelog>
+  
+  <release>
+   <version>
+    <release>0.9.7</release>
+    <api>0.9.7</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2005-01-10</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+    - advance writer position in stream_write() (Bug #2463)
+    - analyzed bugs #1044 and #1045, actual cause is in HTTP_Request,
+      needs to be fixed there (see Bug #1045 for progress)
+    - fixed package dependency bug (HTTP_Request instead of HTTP)
+   </notes>
+  </release>
+
   <release>
    <version>
     <release>0.9.6</release>
