@@ -1,5 +1,6 @@
 <?php
-require "HTTP/Request.php";
+require_once "HTTP/Request.php";
+
 require "HTTP/WebDAV/Tools/_parse_propfind_response.php";
 require "HTTP/WebDAV/Tools/_parse_lock_response.php";
 
