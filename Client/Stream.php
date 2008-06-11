@@ -780,16 +780,18 @@ class HTTP_WebDAV_Client_Stream
             return false;
         }
 
-        // extract settings from stream context
-        $context = stream_context_get_options($this->context);
+        if (isset($this->context)) {
+            // extract settings from stream context
+            $context = stream_context_get_options($this->context);
 
-        // so far we only handle the User-Agent setting
-        if (isset($context[$scheme]['user_agent'])) {
-            $this->userAgent = $context[$scheme]['user_agent'];
+            // so far we only handle the User-Agent setting
+            if (isset($context[$scheme]['user_agent'])) {
+                $this->userAgent = $context[$scheme]['user_agent'];
+            }
+            
+            // TODO check whether to implement other HTTP specific
+            // context settings from http://php.net/manual/en/context.http.php
         }
-
-        // TODO check whether to implement other HTTP specific
-        // context settings from http://php.net/manual/en/context.http.php
 
 
         // if a TCP port is specified we have to add it after the host
