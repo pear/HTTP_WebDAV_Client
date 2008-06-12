@@ -193,9 +193,13 @@ class HTTP_WebDAV_Client_Stream
         // 'w' -> open for writing, truncate existing files
         if (strpos($mode, "w") !== false) {
             $req = &$this->_startRequest(HTTP_REQUEST_METHOD_PUT);
+
+            $req->addHeader('Content-length', 0);
+
             if (is_string($this->user)) {
                 $req->setBasicAuth($this->user, @$this->pass);          
             }
+
             $req->sendRequest();
         }
 
