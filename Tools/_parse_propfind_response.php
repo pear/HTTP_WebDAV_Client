@@ -4,7 +4,7 @@
 class HTTP_WebDAV_Client_parse_propfind_response
 {
     // get requested properties as array containing name/namespace pairs
-    function HTTP_WebDAV_Client_parse_propfind_response($response) 
+    function HTTP_WebDAV_Client_parse_propfind_response($response)
     {
         $this->urls = array();
 
@@ -23,9 +23,9 @@ class HTTP_WebDAV_Client_parse_propfind_response
 
         unset($this->_depth);
     }
-    
-    
-    function _startElement($parser, $name, $attrs) 
+
+
+    function _startElement($parser, $name, $attrs)
     {
         if (strstr($name, " ")) {
             list($ns, $tag) = explode(" ", $name);
@@ -49,7 +49,7 @@ class HTTP_WebDAV_Client_parse_propfind_response
         $this->_depth++;
     }
 
-    function _endElement($parser, $name) 
+    function _endElement($parser, $name)
     {
         if (strstr($name, " ")) {
             list($ns, $tag) = explode(" ", $name);
@@ -98,7 +98,7 @@ class HTTP_WebDAV_Client_parse_propfind_response
                 $this->_tmpprop['mtime'] = strtotime($this->_tmpdata);
                 break;
             case 'creationdate':
-                $t = split("[^[:digit:]]", $this->_tmpdata);
+                $t = preg_split("/[^[:digit:]]/", $this->_tmpdata);
                 $this->_tmpprop['ctime'] = mktime($t[3], $t[4], $t[5], $t[1], $t[2], $t[0]);
                 unset($t);
                 break;
@@ -108,7 +108,7 @@ class HTTP_WebDAV_Client_parse_propfind_response
             }
         case '5':
             switch ($tag) {
-            case 'collection': 
+            case 'collection':
                 $this->_tmpprop['mode'] &= ~0100000; // clear S_IFREG
                 $this->_tmpprop['mode'] |= 040000; // set S_IFDIR
                 break;
@@ -118,12 +118,12 @@ class HTTP_WebDAV_Client_parse_propfind_response
         unset($this->_tmpdata);
     }
 
-    function _data($parser, $data) 
+    function _data($parser, $data)
     {
         $this->_tmpdata = $data;
     }
 
-    function stat($href = false) 
+    function stat($href = false)
     {
         if ($href) {
             // TODO
