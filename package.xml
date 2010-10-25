@@ -1,66 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.6.1" 
-         version="2.0" 
-         xmlns="http://pear.php.net/dtd/package-2.0" 
-         xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
-                             http://pear.php.net/dtd/tasks-1.0.xsd
-                             http://pear.php.net/dtd/package-2.0
-                             http://pear.php.net/dtd/package-2.0.xsd">
-
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0                              http://pear.php.net/dtd/tasks-1.0.xsd                              http://pear.php.net/dtd/package-2.0                              http://pear.php.net/dtd/package-2.0.xsd">
  <name>HTTP_WebDAV_Client</name>
  <channel>pear.php.net</channel>
  <summary>WebDAV stream wrapper class</summary>
-
- <description>
-   RFC2518 compliant stream wrapper that allows to use WebDAV server
-   resources like a regular file system from within PHP.
- </description>
-
+ <description>RFC2518 compliant stream wrapper that allows to use WebDAV server
+   resources like a regular file system from within PHP.</description>
  <lead>
   <name>Hartmut Holzgraefe</name>
   <user>hholzgra</user>
   <email>hartmut@php.net</email>
   <active>yes</active>
  </lead>
-
- <date>2008-01-08</date>
- <time>17:20:00</time>
-
+ <date>2010-10-25</date>
+ <time>19:53:58</time>
  <version>
-  <release>1.0.0</release>
+  <release>1.0.1</release>
   <api>1.0.0</api>
  </version>
-
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
-
  <license uri="http://www.php.net/license">PHP</license>
-
  <notes>
-  1.0 stable release finally
-
-  Bugs fixed since 0.9.7:
-  * Bug #6407: stream_read(): Range one byte too long
-  * Bug #7714: End of file marker not set in stream_read
+QA release
+SVN dir layout
+Bug #12854 	is_file(&apos;webdav://foo/bar.txt&apos;) always returns false
+Bug #13229 	Opening files for append does not place pointer at eof?
+Request #13876 	Make User-Agent header configurable
+Bug #13948 	HTTP/Request.php should be require_once&apos;d
+Bug #14080 	Suppress warning
+Bug #14088 	fopen mode &apos;w&apos; should truncate file
+Request #14089 	support of &quot;header&quot; stream context option
+Bug #17791 	Patch: Avoid deprecated ereg and split
  </notes>
-
  <contents>
-  <dir name="/">
-   <dir name="Client">
-    <file baseinstalldir="HTTP/WebDAV" name="Stream.php" role="php" />
-   </dir> <!-- /Client -->
-   <dir name="Tools">
-    <file baseinstalldir="HTTP/WebDAV" name="_parse_lock_response.php" role="php" />
-    <file baseinstalldir="HTTP/WebDAV" name="_parse_propfind_response.php" role="php" />
-   </dir> <!-- /Tools -->
-   <file baseinstalldir="HTTP/WebDAV" name="Client.php" role="php" />
-  </dir> <!-- / -->
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="cf959fa6c04253e7c79eddec73b9f5e4" name="examples/opendir.php" role="doc" />
+   <file baseinstalldir="/" md5sum="de450b9058b371a96c9f922038f5a792" name="HTTP/WebDAV/Client.php" role="php" />
+   <file baseinstalldir="/" md5sum="764c87ca473a3cb6232d30b845bd37e4" name="HTTP/WebDAV/Client/Stream.php" role="php" />
+   <file baseinstalldir="/" md5sum="0dd723a09b26b627e96fd7cd9d239f57" name="HTTP/WebDAV/Tools/_parse_lock_response.php" role="php" />
+   <file baseinstalldir="/" md5sum="d8c412b25725bfe99b822cb494605a53" name="HTTP/WebDAV/Tools/_parse_propfind_response.php" role="php" />
+  </dir>
  </contents>
-
  <dependencies>
   <required>
    <php>
@@ -76,66 +58,8 @@
    </package>
   </required>
  </dependencies>
-
- <phprelease/>
-
+ <phprelease />
  <changelog>
-  
-  <release>
-   <version>
-    <release>0.9.7</release>
-    <api>0.9.7</api>
-   </version>
-   <stability>
-    <release>beta</release>
-    <api>beta</api>
-   </stability>
-   <date>2005-01-10</date>
-   <license uri="http://www.php.net/license">PHP</license>
-   <notes>
-    - advance writer position in stream_write() (Bug #2463)
-    - analyzed bugs #1044 and #1045, actual cause is in HTTP_Request,
-      needs to be fixed there (see Bug #1045 for progress)
-    - fixed package dependency bug (HTTP_Request instead of HTTP)
-   </notes>
-  </release>
-
-  <release>
-   <version>
-    <release>0.9.6</release>
-    <api>0.9.6</api>
-   </version>
-   <stability>
-    <release>beta</release>
-    <api>beta</api>
-   </stability>
-   <date>2003-12-20</date>
-   <license uri="http://www.php.net/license">PHP</license>
-   <notes>
-    - fixed settings of mode flags for stat()/url_stat()
-    - added missing authentication in lots of places
-    - added support for rename() and mkdir() (PHP &gt;= 5.0.0b3)
-    - added lock support (experimental, requires PHP changes not yet in CVS)
-   </notes>
-  </release>
-
-  <release>
-   <version>
-    <release>0.9.5</release>
-    <api>0.9.5</api>
-   </version>
-   <stability>
-    <release>beta</release>
-    <api>beta</api>
-   </stability>
-   <date>2003-12-04</date>
-   <license uri="http://www.php.net/license">PHP</license>
-   <notes>
-    lots of small improvements and additions, now waiting for missing 
-    pieces in the user streams interface ...
-   </notes>
-  </release>
-
   <release>
    <version>
     <release>0.9.0</release>
@@ -148,8 +72,84 @@
    <date>2003-07-11</date>
    <license uri="http://www.php.net/license">PHP</license>
    <notes>
-    already usable but needs additional performance tuning and
-    error checking
+already usable but needs additional performance tuning and
+error checking
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.9.5</release>
+    <api>0.9.5</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2003-12-04</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+lots of small improvements and additions, now waiting for missing 
+pieces in the user streams interface ...
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.9.6</release>
+    <api>0.9.6</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2003-12-20</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- fixed settings of mode flags for stat()/url_stat()
+- added missing authentication in lots of places
+- added support for rename() and mkdir() (PHP &gt;= 5.0.0b3)
+- added lock support (experimental, requires PHP changes not yet in CVS)
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.9.7</release>
+    <api>0.9.7</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2005-01-10</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+- advance writer position in stream_write() (Bug #2463)
+- analyzed bugs #1044 and #1045, actual cause is in HTTP_Request,
+  needs to be fixed there (see Bug #1045 for progress)
+- fixed package dependency bug (HTTP_Request instead of HTTP)
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-10-25</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+QA release
+SVN dir layout
+Bug #12854 	is_file(&apos;webdav://foo/bar.txt&apos;) always returns false
+Bug #13229 	Opening files for append does not place pointer at eof?
+Request #13876 	Make User-Agent header configurable
+Bug #13948 	HTTP/Request.php should be require_once&apos;d
+Bug #14080 	Suppress warning
+Bug #14088 	fopen mode &apos;w&apos; should truncate file
+Request #14089 	support of &quot;header&quot; stream context option
+Bug #17791 	Patch: Avoid deprecated ereg and split
    </notes>
   </release>
  </changelog>
