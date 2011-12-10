@@ -313,7 +313,7 @@ class HTTP_WebDAV_Client_Stream
     {
         // do some math
         $start = $this->position;
-        $end   = $this->position + strlen($buffer);
+        $end   = $this->position + strlen($buffer) - 1;
 
         // create a partial PUT request
         $req = &$this->_startRequest(HTTP_REQUEST_METHOD_PUT);
@@ -335,7 +335,7 @@ class HTTP_WebDAV_Client_Stream
         case 201:
         case 204:
             $this->position += strlen($buffer);
-            return $end - $start;
+            return 1 + $end - $start;
             
         default: 
             return false;
