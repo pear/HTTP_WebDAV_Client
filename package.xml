@@ -12,7 +12,7 @@
   <active>yes</active>
  </lead>
  <date>2011-12-11</date>
- <time>22:35:56</time>
+ <time>22:38:23</time>
  <version>
   <release>1.0.2</release>
   <api>1.0.0</api>
@@ -32,8 +32,6 @@ Bug #18445 Response parsing fail if XML is on one line and hrefs contain the abs
    <file baseinstalldir="/" md5sum="cf959fa6c04253e7c79eddec73b9f5e4" name="examples/opendir.php" role="doc" />
    <file baseinstalldir="/" md5sum="de450b9058b371a96c9f922038f5a792" name="HTTP/WebDAV/Client.php" role="php" />
    <file baseinstalldir="/" md5sum="e390b611e444cc6651f2ca21dce649d6" name="HTTP/WebDAV/Client/Stream.php" role="php" />
-   <file baseinstalldir="/" md5sum="e390b611e444cc6651f2ca21dce649d6" name="HTTP/WebDAV/Client/Stream.php.orig" role="data" />
-   <file baseinstalldir="/" md5sum="e84c6e723e61bcf330fa0418b86d1bf5" name="HTTP/WebDAV/Client/Stream.php.rej" role="data" />
    <file baseinstalldir="/" md5sum="0dd723a09b26b627e96fd7cd9d239f57" name="HTTP/WebDAV/Tools/_parse_lock_response.php" role="php" />
    <file baseinstalldir="/" md5sum="d8c412b25725bfe99b822cb494605a53" name="HTTP/WebDAV/Tools/_parse_propfind_response.php" role="php" />
    <file baseinstalldir="/" md5sum="5e94d33684d2f0ff5fba0319916e58cd" name="README" role="data" />
