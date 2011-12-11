@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0                              http://pear.php.net/dtd/tasks-1.0.xsd                              http://pear.php.net/dtd/package-2.0                              http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0                              http://pear.php.net/dtd/tasks-1.0.xsd                              http://pear.php.net/dtd/package-2.0                              http://pear.php.net/dtd/package-2.0.xsd">
  <name>HTTP_WebDAV_Client</name>
  <channel>pear.php.net</channel>
  <summary>WebDAV stream wrapper class</summary>
@@ -11,10 +11,10 @@
   <email>hartmut@php.net</email>
   <active>yes</active>
  </lead>
- <date>2010-10-25</date>
- <time>19:53:58</time>
+ <date>2011-12-11</date>
+ <time>22:35:56</time>
  <version>
-  <release>1.0.1</release>
+  <release>1.0.2</release>
   <api>1.0.0</api>
  </version>
  <stability>
@@ -23,24 +23,20 @@
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
  <notes>
-QA release
-SVN dir layout
-Bug #12854 	is_file(&apos;webdav://foo/bar.txt&apos;) always returns false
-Bug #13229 	Opening files for append does not place pointer at eof?
-Request #13876 	Make User-Agent header configurable
-Bug #13948 	HTTP/Request.php should be require_once&apos;d
-Bug #14080 	Suppress warning
-Bug #14088 	fopen mode &apos;w&apos; should truncate file
-Request #14089 	support of &quot;header&quot; stream context option
-Bug #17791 	Patch: Avoid deprecated ereg and split
+QA Release
+Bug #14164 Content-range calculation is wrong.
+Bug #18445 Response parsing fail if XML is on one line and hrefs contain the absolute URI
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="/" md5sum="cf959fa6c04253e7c79eddec73b9f5e4" name="examples/opendir.php" role="doc" />
    <file baseinstalldir="/" md5sum="de450b9058b371a96c9f922038f5a792" name="HTTP/WebDAV/Client.php" role="php" />
-   <file baseinstalldir="/" md5sum="764c87ca473a3cb6232d30b845bd37e4" name="HTTP/WebDAV/Client/Stream.php" role="php" />
+   <file baseinstalldir="/" md5sum="e390b611e444cc6651f2ca21dce649d6" name="HTTP/WebDAV/Client/Stream.php" role="php" />
+   <file baseinstalldir="/" md5sum="e390b611e444cc6651f2ca21dce649d6" name="HTTP/WebDAV/Client/Stream.php.orig" role="data" />
+   <file baseinstalldir="/" md5sum="e84c6e723e61bcf330fa0418b86d1bf5" name="HTTP/WebDAV/Client/Stream.php.rej" role="data" />
    <file baseinstalldir="/" md5sum="0dd723a09b26b627e96fd7cd9d239f57" name="HTTP/WebDAV/Tools/_parse_lock_response.php" role="php" />
    <file baseinstalldir="/" md5sum="d8c412b25725bfe99b822cb494605a53" name="HTTP/WebDAV/Tools/_parse_propfind_response.php" role="php" />
+   <file baseinstalldir="/" md5sum="5e94d33684d2f0ff5fba0319916e58cd" name="README" role="data" />
   </dir>
  </contents>
  <dependencies>
@@ -150,6 +146,23 @@ Bug #14080 	Suppress warning
 Bug #14088 	fopen mode &apos;w&apos; should truncate file
 Request #14089 	support of &quot;header&quot; stream context option
 Bug #17791 	Patch: Avoid deprecated ereg and split
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2011-12-11</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+QA Release
+Bug #14164 Content-range calculation is wrong.
+Bug #18445 Response parsing fail if XML is on one line and hrefs contain the absolute URI
    </notes>
   </release>
  </changelog>
