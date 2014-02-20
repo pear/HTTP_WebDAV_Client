@@ -1,0 +1,32 @@
+{
+    "authors": [
+        {
+            "email": "hartmut@php.net",
+            "name": "Hartmut Holzgraefe",
+            "role": "Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "HTTP": "./"
+        }
+    },
+    "description": "More info available on: http://pear.php.net/package/HTTP_WebDAV_Client",
+    "include-path": [
+        "./"
+    ],
+    "license": "PHP",
+    "name": "pear/http_webdav_client",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=HTTP_WebDAV_Client",
+        "source": "https://github.com/pear/HTTP_WebDAV_Client"
+    },
+    "type": "library",
+    "require": {
+        "pear/pear_exception": "*",
+        "pear/http_request": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
