@@ -156,11 +156,11 @@ class HTTP_WebDAV_Client_Stream
         // we only need type, size, creation and modification date
         $req = $this->_startRequest(self::METHOD_PROPFIND);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
-        $req->addHeader("Depth", "0");
-        $req->addHeader("Content-Type", "text/xml");
-        $req->addRawPostData('<?xml version="1.0" encoding="utf-8"?>
+        $req->setHeader("Depth", "0");
+        $req->setHeader("Content-Type", "text/xml");
+        $req->setBody('<?xml version="1.0" encoding="utf-8"?>
 <propfind xmlns="DAV:">
  <prop>
   <resourcetype/>
@@ -170,13 +170,13 @@ class HTTP_WebDAV_Client_Stream
  </prop>
 </propfind>
 ');
-        $req->sendRequest();
+        $result = $req->send();
 
         // check the response code, anything but 207 indicates a problem
-        switch ($req->getResponseCode()) {
+        switch ($result->getStatus()) {
         case 207: // OK
             // now we have to parse the result to get the status info items
-            $propinfo = &new HTTP_WebDAV_Client_parse_propfind_response($req->getResponseBody());
+            $propinfo = new HTTP_WebDAV_Client_parse_propfind_response($result->getBody());
             $this->stat = $propinfo->stat();
             unset($propinfo);
             break;
@@ -188,7 +188,7 @@ class HTTP_WebDAV_Client_Stream
             $this->eof = true;
             // else fallthru
         default: 
-            error_log("file not found: ".$req->getResponseCode());
+            error_log("file not found: ".$result->getStatus());
             return false;
         }
         
@@ -196,13 +196,13 @@ class HTTP_WebDAV_Client_Stream
         if (strpos($mode, "w") !== false) {
             $req = $this->_startRequest(HTTP_Request2::METHOD_PUT);
 
-            $req->addHeader('Content-length', 0);
+            $req->setHeader('Content-length', 0);
 
             if (is_string($this->user)) {
-                $req->setBasicAuth($this->user, @$this->pass);          
+                $req->setAuth($this->user, @$this->pass);          
             }
 
-            $req->sendRequest();
+            $req->send();
         }
 
         // 'a' -> open for appending
@@ -261,17 +261,17 @@ class HTTP_WebDAV_Client_Stream
         // create a GET request with a range
         $req = $this->_startRequest(HTTP_Request2::METHOD_GET);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
-        $req->addHeader("Range", "bytes=$start-$end");
+        $req->setHeader("Range", "bytes=$start-$end");
 
         // go! go! go!
-        $req->sendRequest();
-        $data = $req->getResponseBody();
+        $result = $req->send();
+        $data = $result->getBody();
         $len  = strlen($data);
 
         // lets see what happened
-        switch ($req->getResponseCode()) {
+        switch ($result->getStatus()) {
         case 200: 
             // server doesn't support range requests 
             // TODO we should add some sort of cacheing here
@@ -320,19 +320,19 @@ class HTTP_WebDAV_Client_Stream
         // create a partial PUT request
         $req = $this->_startRequest(HTTP_Request2::METHOD_PUT);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
-        $req->addHeader("Content-Range", "bytes $start-$end/*");
+        $req->setHeader("Content-Range", "bytes $start-$end/*");
         if ($this->locktoken) {
-            $req->addHeader("If", "(<{$this->locktoken}>)");
+            $req->setHeader("If", "(<{$this->locktoken}>)");
         }
-        $req->addRawPostData($buffer);
+        $req->setBody($buffer);
 
         // go! go! go!
-        $req->sendRequest();
+        $result = $req->send();
 
         // check result
-        switch ($req->getResponseCode()) {
+        switch ($result->getStatus()) {
         case 200:
         case 201:
         case 204:
@@ -473,11 +473,11 @@ class HTTP_WebDAV_Client_Stream
         // now read the directory
         $req = $this->_startRequest(self::METHOD_PROPFIND);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
-        $req->addHeader("Depth", "1");
-        $req->addHeader("Content-Type", "text/xml");
-        $req->addRawPostData('<?xml version="1.0" encoding="utf-8"?>
+        $req->setHeader("Depth", "1");
+        $req->setHeader("Content-Type", "text/xml");
+        $req->setBody('<?xml version="1.0" encoding="utf-8"?>
 <propfind xmlns="DAV:">
  <prop>
   <resourcetype/>
@@ -487,15 +487,15 @@ class HTTP_WebDAV_Client_Stream
  </prop>
 </propfind>
 ');
-        $req->sendRequest();
+        $result = $req->send();
 
-        switch ($req->getResponseCode()) {
+        switch ($result->getStatus()) {
         case 207: // multistatus content
             $this->dirfiles = array();
             $this->dirpos = 0;
 
             // for all returned resource entries
-            foreach (explode("\n", $req->getResponseBody()) as $line) {
+            foreach (explode("\n", $result->getBody()) as $line) {
                 // Preg_match_all if the whole response is one line!
                 if (preg_match_all("/href>([^<]*)/", $line, $matches)) {
                     // skip the directory itself                    
@@ -590,15 +590,15 @@ class HTTP_WebDAV_Client_Stream
 
         $req = $this->_startRequest(self::METHOD_MKCOL);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
         if ($this->locktoken) {
-            $req->addHeader("If", "(<{$this->locktoken}>)");
+            $req->setHeader("If", "(<{$this->locktoken}>)");
         }
-        $req->sendRequest();
+        $result = $req->send();
 
         // check the response code, anything but 201 indicates a problem
-        $stat = $req->getResponseCode();
+        $stat = $result->getStatus();
         switch ($stat) {
         case 201:
             return true;
@@ -628,15 +628,15 @@ class HTTP_WebDAV_Client_Stream
 
         $req = $this->_startRequest(HTTP_Request2::METHOD_DELETE);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
         if ($this->locktoken) {
-            $req->addHeader("If", "(<{$this->locktoken}>)");
+            $req->setHeader("If", "(<{$this->locktoken}>)");
         }
-        $req->sendRequest();
+        $result = $req->send();
 
         // check the response code, anything but 204 indicates a problem
-        $stat = $req->getResponseCode();
+        $stat = $result->getStatus();
         switch ($stat) {
         case 204:
             return true;
@@ -665,17 +665,17 @@ class HTTP_WebDAV_Client_Stream
 
         $req = $this->_startRequest(self::METHOD_MOVE);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
         if ($this->locktoken) {
-            $req->addHeader("If", "(<{$this->locktoken}>)");
+            $req->setHeader("If", "(<{$this->locktoken}>)");
         }
         if (!$this->_parse_url($new_path)) return false;
-        $req->addHeader("Destination", $this->url);
-        $req->sendRequest();
+        $req->setHeader("Destination", $this->url);
+        $result = $req->send();
 
         // check the response code, anything but 207 indicates a problem
-        $stat = $req->getResponseCode();
+        $stat = $result->getStatus();
         switch ($stat) {
         case 201:
         case 204:
@@ -709,14 +709,14 @@ class HTTP_WebDAV_Client_Stream
 
         $req = $this->_startRequest(HTTP_Request2::METHOD_DELETE);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
         if ($this->locktoken) {
-            $req->addHeader("If", "(<{$this->locktoken}>)");
+            $req->setHeader("If", "(<{$this->locktoken}>)");
         }
-        $req->sendRequest();
+        $result = $req->send();
 
-        switch ($req->getResponseCode()) {
+        switch ($result->getStatus()) {
         case 204: // ok
             return true;
         default: 
@@ -830,10 +830,10 @@ class HTTP_WebDAV_Client_Stream
         // now check OPTIONS reply for WebDAV response headers
         $req = $this->_startRequest(HTTP_Request2::METHOD_OPTIONS);
         if (is_string($this->user)) {
-            $req->setBasicAuth($this->user, @$this->pass);          
+            $req->setAuth($this->user, @$this->pass);          
         }
-        $req->sendRequest();
-        if ($req->getResponseCode() != 200) {
+        $result = $req->send();
+        if ($result->getStatus() != 200) {
             return false;
         }
 
@@ -886,12 +886,12 @@ class HTTP_WebDAV_Client_Stream
             if ($this->locktoken) {
                 $req = $this->_startRequest(self::METHOD_UNLOCK);
                 if (is_string($this->user)) {
-                    $req->setBasicAuth($this->user, @$this->pass);          
+                    $req->setAuth($this->user, @$this->pass);          
                 }
-                $req->addHeader("Lock-Token", "<{$this->locktoken}>");
-                $req->sendRequest();
+                $req->setHeader("Lock-Token", "<{$this->locktoken}>");
+                $result = $req->send();
 
-                $ret = $req->getResponseCode() == 204;
+                $ret = $req->getStatus() == 204;
             }
             break;
 
@@ -907,20 +907,20 @@ class HTTP_WebDAV_Client_Stream
                             get_class($this)); // TODO better owner string
             $req = $this->_startRequest(self::METHOD_LOCK);
             if (is_string($this->user)) {
-                $req->setBasicAuth($this->user, @$this->pass);          
+                $req->setAuth($this->user, @$this->pass);          
             }
             if ($this->locktoken) { // needed for refreshing a lock
-                $req->addHeader("Lock-Token", "<{$this->locktoken}>");
+                $req->setHeader("Lock-Token", "<{$this->locktoken}>");
             }
-            $req->addHeader("Timeout", "Infinite, Second-4100000000");
-            $req->addHeader("Content-Type", 'text/xml; charset="utf-8"');
-            $req->addRawPostData($body);
-            $req->sendRequest();
+            $req->setHeader("Timeout", "Infinite, Second-4100000000");
+            $req->setHeader("Content-Type", 'text/xml; charset="utf-8"');
+            $req->setBody($body);
+            $result = $req->send();
 
-            $ret = $req->getResponseCode() == 200;          
+            $ret = $result->getStatus() == 200;          
 
             if ($ret) {
-                $propinfo = &new HTTP_WebDAV_Client_parse_lock_response($req->getResponseBody());               
+                $propinfo = new HTTP_WebDAV_Client_parse_lock_response($result->getBody());
                 $this->locktoken = $propinfo->locktoken;
                 // TODO deal with timeout
             }
