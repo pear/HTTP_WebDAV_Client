@@ -46,9 +46,9 @@ Drop PHP4
     <min>1.5.6</min>
    </pearinstaller>
    <package>
-    <name>HTTP_Request</name>
+    <name>HTTP_Request2</name>
     <channel>pear.php.net</channel>
-    <min>1.0</min>
+    <min>1.0.0</min>
    </package>
   </required>
  </dependencies>
