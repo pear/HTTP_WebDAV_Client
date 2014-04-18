@@ -1,10 +1,9 @@
 <?php
-
 // helper class for parsing PROPFIND response bodies
 class HTTP_WebDAV_Client_parse_propfind_response
 {
     // get requested properties as array containing name/namespace pairs
-    function HTTP_WebDAV_Client_parse_propfind_response($response)
+    function __construct($response)
     {
         $this->urls = array();
 
@@ -12,10 +11,10 @@ class HTTP_WebDAV_Client_parse_propfind_response
 
         $xml_parser = xml_parser_create_ns("UTF-8", " ");
         xml_set_element_handler($xml_parser,
-                                array(&$this, "_startElement"),
-                                array(&$this, "_endElement"));
+                                array($this, "_startElement"),
+                                array($this, "_endElement"));
         xml_set_character_data_handler($xml_parser,
-                                       array(&$this, "_data"));
+                                       array($this, "_data"));
         xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING,
                               false);
         $this->success = xml_parse($xml_parser, $response, true);
