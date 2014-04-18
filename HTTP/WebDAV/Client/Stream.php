@@ -494,16 +494,16 @@ class HTTP_WebDAV_Client_Stream
 
             // for all returned resource entries
             foreach (explode("\n", $req->getResponseBody()) as $line) {
-            	// Preg_match_all if the whole response is one line!
+                // Preg_match_all if the whole response is one line!
                 if (preg_match_all("/href>([^<]*)/", $line, $matches)) {
                     // skip the directory itself                    
                     foreach ($matches[1] as $match){
-                    	// Compare to $this->url too
-	                    if ($match == "" || $match == $this->path || $match == $this->url) {
-	                    	continue;
-	                    }
-	                    // just remember the basenames to return them later with readdir()
-	                    $this->dirfiles[] = basename($match);
+                        // Compare to $this->url too
+                        if ($match == "" || $match == $this->path || $match == $this->url) {
+                            continue;
+                        }
+                        // just remember the basenames to return them later with readdir()
+                        $this->dirfiles[] = basename($match);
                     }
                 }
             }
