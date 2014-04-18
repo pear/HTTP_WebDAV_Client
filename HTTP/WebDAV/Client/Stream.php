@@ -838,7 +838,7 @@ class HTTP_WebDAV_Client_Stream
         }
 
         // get the supported DAV levels and extensions
-        $dav = $req->getResponseHeader("DAV");
+        $dav = $result->getHeader("DAV");
         $this->dav_level = array();
         foreach (explode(",", $dav) as $level) {
             $this->dav_level[trim($level)] = true;
@@ -850,7 +850,7 @@ class HTTP_WebDAV_Client_Stream
         
         // get the supported HTTP methods
         // TODO these are not checked for WebDAV compliance yet
-        $allow = $req->getResponseHeader("Allow");
+        $allow = $result->getHeader("Allow");
         $this->dav_allow = array();
         foreach (explode(",", $allow) as $method) {
             $this->dav_allow[trim($method)] = true;
@@ -891,7 +891,7 @@ class HTTP_WebDAV_Client_Stream
                 $req->setHeader("Lock-Token", "<{$this->locktoken}>");
                 $result = $req->send();
 
-                $ret = $req->getStatus() == 204;
+                $ret = $result->getStatus() == 204;
             }
             break;
 
