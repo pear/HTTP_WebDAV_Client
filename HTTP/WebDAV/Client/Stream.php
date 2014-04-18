@@ -142,7 +142,7 @@ class HTTP_WebDAV_Client_Stream
      * @var    string return real path here if suitable
      * @return bool   true on success
      */
-    function stream_open($path, $mode, $options, &$opened_path) 
+    function stream_open($path, $mode, $options, $opened_path) 
     {
         // rewrite the request URL
         if (!$this->_parse_url($path)) return false;
@@ -152,7 +152,7 @@ class HTTP_WebDAV_Client_Stream
 
         // now get the file metadata
         // we only need type, size, creation and modification date
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_PROPFIND);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_PROPFIND);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -192,7 +192,7 @@ class HTTP_WebDAV_Client_Stream
         
         // 'w' -> open for writing, truncate existing files
         if (strpos($mode, "w") !== false) {
-            $req = &$this->_startRequest(HTTP_REQUEST_METHOD_PUT);
+            $req = $this->_startRequest(HTTP_REQUEST_METHOD_PUT);
 
             $req->addHeader('Content-length', 0);
 
@@ -257,7 +257,7 @@ class HTTP_WebDAV_Client_Stream
         $end   = $start + $count - 1;
 
         // create a GET request with a range
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_GET);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_GET);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -316,7 +316,7 @@ class HTTP_WebDAV_Client_Stream
         $end   = $this->position + strlen($buffer) - 1;
 
         // create a partial PUT request
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_PUT);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_PUT);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -469,7 +469,7 @@ class HTTP_WebDAV_Client_Stream
         }
 
         // now read the directory
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_PROPFIND);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_PROPFIND);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -586,7 +586,7 @@ class HTTP_WebDAV_Client_Stream
         // query server for WebDAV options
         if (!$this->_check_options())  return false;
 
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_MKCOL);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_MKCOL);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -624,7 +624,7 @@ class HTTP_WebDAV_Client_Stream
         // query server for WebDAV options
         if (!$this->_check_options())  return false;
 
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_DELETE);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_DELETE);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -661,7 +661,7 @@ class HTTP_WebDAV_Client_Stream
         // query server for WebDAV options
         if (!$this->_check_options())  return false;
 
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_MOVE);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_MOVE);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -705,7 +705,7 @@ class HTTP_WebDAV_Client_Stream
             return false;
         }       
 
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_DELETE);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_DELETE);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -826,7 +826,7 @@ class HTTP_WebDAV_Client_Stream
     function _check_options() 
     {
         // now check OPTIONS reply for WebDAV response headers
-        $req = &$this->_startRequest(HTTP_REQUEST_METHOD_OPTIONS);
+        $req = $this->_startRequest(HTTP_REQUEST_METHOD_OPTIONS);
         if (is_string($this->user)) {
             $req->setBasicAuth($this->user, @$this->pass);          
         }
@@ -882,7 +882,7 @@ class HTTP_WebDAV_Client_Stream
         switch ($mode & ~LOCK_NB) {
         case LOCK_UN:
             if ($this->locktoken) {
-                $req = &$this->_startRequest(HTTP_REQUEST_METHOD_UNLOCK);
+                $req = $this->_startRequest(HTTP_REQUEST_METHOD_UNLOCK);
                 if (is_string($this->user)) {
                     $req->setBasicAuth($this->user, @$this->pass);          
                 }
@@ -903,7 +903,7 @@ class HTTP_WebDAV_Client_Stream
 </D:lockinfo>',
                             ($mode & LOCK_SH) ? "shared" : "exclusive",
                             get_class($this)); // TODO better owner string
-            $req = &$this->_startRequest(HTTP_REQUEST_METHOD_LOCK);
+            $req = $this->_startRequest(HTTP_REQUEST_METHOD_LOCK);
             if (is_string($this->user)) {
                 $req->setBasicAuth($this->user, @$this->pass);          
             }
@@ -931,7 +931,7 @@ class HTTP_WebDAV_Client_Stream
         return $ret;
     }
 
-    function &_startRequest($method)
+    function _startRequest($method)
     {
         $req = &new HTTP_Request($this->url);
 
